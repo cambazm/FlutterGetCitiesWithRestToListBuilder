@@ -19,8 +19,8 @@ class RemoteDataSource {
           await client.request(requestType: RequestType.GET, path: "cities");
       if (response.statusCode == 200) {
         CityResponse r = CityResponse.fromRawJson(response.body);
-        r.data.sort((a, b) {
-          return a.name.toLowerCase().compareTo(b.name.toLowerCase()); //TODO Turkce karakterle baslayan sehirler en sona atiliyor, https://pub.dev/packages/turkish sort implemente edilmeli
+        r.data..sort((a, b) {
+          return turkish.comparatorIgnoreCase(a.name, b.name); 
         });
         return Result<CityResponse>.success(r);
       } else {
